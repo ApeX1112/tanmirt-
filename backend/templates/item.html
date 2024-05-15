@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Item Page</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Item:</h1>
+        <p class="item-title">{{item.title}}</p>
+        <img src="{{item.image.url}}" alt="Item image" class="item-image">
+        <p class="item-description">{{item.description}}</p>
+        <p class="item-details"><strong>Posted:</strong> {{item.date}} <strong>by:</strong> {{item.user.username}}</p>
+        <button class="contact-button">Contact {{item.user.username}}</button>
+    </div>
+</body>
+</html>

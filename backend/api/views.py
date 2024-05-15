@@ -9,9 +9,19 @@ from .forms import TanmirtPostForm
 from .models import TanmirtPost
 
 def home(request):
-    posts=TanmirtPost.objects.all()
+    q=request.GET.get('q')
+    if q:
+        posts=TanmirtPost.objects.filter(title__icontains=q)
+    else:
+
+        posts=TanmirtPost.objects.all()
     context={'posts':posts}
     return render(request,'home.html',context)
+
+def showitem(request,pk):
+    item=TanmirtPost.objects.get(pk=pk)
+    context={'item':item}
+    return render(request,'item.html',context)
 
 def Post_on_Tanmirt(request):
     my_posts=TanmirtPost.objects.filter(user=request.user)
