@@ -1,0 +1,95 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tanmirt</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .post {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 300px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap:10px;
+        }
+
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .post img:hover {
+            transform: scale(1.05);
+        }
+
+        .post h2 {
+            font-size: 1.5em;
+            margin: 0 0 10px;
+            color: #333;
+            text-align: center;
+        }
+
+        .post p {
+            color: #555;
+            margin: 0 0 10px;
+            text-align: center;
+        }
+    </style>
+    <h1 class="title">welcome to tanmirt </h1>
+    <a href="{% url 'register' %}"> register</a> <br>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}"> logout</a> <br>
+    {% else %}
+
+    <a href="{% url 'login' %}"> login</a> <br>
+    {% endif %}
+
+    <a href="{% url 'myposts' %}"> post on Tanmirt!</a>
+
+    <h1>Items</h1>
+    <div class="posts">
+        {% for post in posts %}
+        <div class="post">
+        <img src="{{post.image.url}}" alt="{{post.title}}" class="image">
+        <h2>{{post.title}}</h2>
+        <p>{{post.description}}</p>
+        <p><strong>Posted by:</strong> {{post.user.username}}</p>
+        <p><strong>Date:</strong>{{post.date}}</p>
+        <hr/>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</body>
+</html>
