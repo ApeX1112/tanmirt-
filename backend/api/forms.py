@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from .models import User , TanmirtPost 
+from .models import User , TanmirtPost ,Message
+from django import forms
 
 class MyUserCreationForm(UserCreationForm):
     class Meta:
@@ -17,3 +18,23 @@ class TanmirtPostForm(ModelForm):
             'title',
             'description'
         ]
+
+
+class MessageForm(ModelForm):
+    class Meta:
+
+        model=Message
+        fields=[
+            'body'
+        ]
+        widgets = {
+            'body': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Type your message here...',
+                'rows': 4,
+                'cols': 50
+            }),
+        }
+        labels = {
+            'body': '',  
+        }

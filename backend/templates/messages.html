@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Send a message to: {{ receiver.username }}</h1>
+
+        {% for message in messages %}
+        <div class="message">
+            <h1>{{ message.sender.username }}</h1>
+            <p>{{ message.body }}</p>
+            <p><strong>Sent at:</strong> {{ message.date }}</p>
+        </div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.body.label_tag }}
+            {{ form.body }}
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

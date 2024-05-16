@@ -15,7 +15,11 @@
         <img src="{{item.image.url}}" alt="Item image" class="item-image">
         <p class="item-description">{{item.description}}</p>
         <p class="item-details"><strong>Posted:</strong> {{item.date}} <strong>by:</strong> {{item.user.username}}</p>
-        <button class="contact-button">Contact {{item.user.username}}</button>
+        <button class="contact-button">
+            <a href="{% url 'message' item.user.id%}">
+                Contact {{item.user.username}}
+            </a>
+        </button>
     </div>
 </body>
 </html>

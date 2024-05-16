@@ -4,9 +4,10 @@ from django.contrib.auth import login , authenticate ,logout
 from .forms import MyUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
-from .forms import TanmirtPostForm
-from .models import TanmirtPost
+from .forms import TanmirtPostForm , MessageForm
+from .models import TanmirtPost , Message
 
 def home(request):
     q=request.GET.get('q')
@@ -22,6 +23,23 @@ def showitem(request,pk):
     item=TanmirtPost.objects.get(pk=pk)
     context={'item':item}
     return render(request,'item.html',context)
+
+def TanmirtMessage(request,userid):
+    messages=Message.objects.all()
+    receiver=User.objects.get(pk=userid)
+    if request.method=='POST':
+        form=MessageForm(request.POST)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.sender=request.user
+            instance.receiver=receiver
+            instance.save()
+            return redirect('message',userid=userid)
+    else:
+        form=MessageForm()
+    
+    context={'receiver':receiver , 'form':form,'messages':messages}
+    return render(request,'messages.html',context)
 
 def Post_on_Tanmirt(request):
     my_posts=TanmirtPost.objects.filter(user=request.user)
