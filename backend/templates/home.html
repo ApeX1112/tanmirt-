@@ -35,6 +35,13 @@
     </div>
     {% endif %}
 
+    <form id="positionForm" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="id_latitude" name="latitude">
+        <input type="hidden" id="id_longitude" name="longitude">
+        <button type="button" onclick="getLocation()">Get Location</button>
+    </form>
+
     
 
     <h1>Items</h1>
@@ -58,5 +65,8 @@
         {% endfor %}
 
     </div>
+
+    
+    <script src="{% static 'js/location.jsx'%}"></script>
 </body>
 </html>

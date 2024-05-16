@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .forms import TanmirtPostForm , MessageForm ,CommentForm
-from .models import TanmirtPost , Message ,Comment 
+from .models import TanmirtPost , Message ,Comment , UserProfile
 
 def home(request):
     q=request.GET.get('q')
@@ -16,6 +16,17 @@ def home(request):
     else:
 
         posts=TanmirtPost.objects.all()
+
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        if latitude and longitude:
+            profile.latitude = latitude
+            profile.longitude = longitude
+            profile.save()
+            return redirect('home')
+
     context={'posts':posts}
     return render(request,'home.html',context)
 
@@ -109,3 +120,6 @@ def LogoutUser(request):
     logout(request)
 
     return redirect('home')
+
+
+
