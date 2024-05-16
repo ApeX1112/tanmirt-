@@ -6,8 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import TanmirtPostForm , MessageForm
-from .models import TanmirtPost , Message
+from .forms import TanmirtPostForm , MessageForm ,CommentForm
+from .models import TanmirtPost , Message ,Comment 
 
 def home(request):
     q=request.GET.get('q')
@@ -21,7 +21,19 @@ def home(request):
 
 def showitem(request,pk):
     item=TanmirtPost.objects.get(pk=pk)
-    context={'item':item}
+    comments=Comment.objects.filter(post=item)
+    if request.method=='POST':
+        form=CommentForm(request.POST)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.post=item
+            instance.writer=request.user
+            instance.save()
+            return redirect('item',pk)
+    else:
+        form=CommentForm()
+
+    context={'item':item,'comments':comments, 'form':form}
     return render(request,'item.html',context)
 
 def TanmirtMessage(request,userid):

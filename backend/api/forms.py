@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from .models import User , TanmirtPost ,Message
+from .models import User , TanmirtPost ,Message , Comment
 from django import forms
 
 class MyUserCreationForm(UserCreationForm):
@@ -16,7 +16,8 @@ class TanmirtPostForm(ModelForm):
         fields=[
             'image',
             'title',
-            'description'
+            'description',
+            'lost_or_found'
         ]
 
 
@@ -38,3 +39,12 @@ class MessageForm(ModelForm):
         labels = {
             'body': '',  
         }
+
+
+class CommentForm(ModelForm):
+    class Meta:
+
+        model=Comment
+        fields=[
+            'body'
+        ]

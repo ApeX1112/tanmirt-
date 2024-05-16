@@ -36,7 +36,7 @@ class Comment(models.Model):
     body=models.TextField()
     writer=models.ForeignKey(User,on_delete=models.CASCADE,related_name='writer')
     date=models.DateTimeField(auto_now_add=True)
-    post=models.ForeignKey(User,on_delete=models.CASCADE,related_name='post')
+    post=models.ForeignKey(TanmirtPost,on_delete=models.CASCADE,related_name='post')
 
     def __str__(self) -> str:
         return f"comment written at : {self.date}"

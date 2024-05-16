@@ -21,5 +21,22 @@
             </a>
         </button>
     </div>
+    <div>
+        <hr/>
+        <h1>Comments</h1>
+
+        <form  method="post">
+
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit"> comment </button>
+        </form>
+
+        {%for comment in comments%}
+        <h1>{{comment.writer.username}}</h1>
+        <p>{{comment.body}}</p>
+        <p><strong>commented at:</strong> {{comment.date}}</p>
+        {%endfor%}
+    </div>
 </body>
 </html>
