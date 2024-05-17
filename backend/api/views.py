@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import TanmirtPostForm , MessageForm ,CommentForm
+from .forms import TanmirtPostForm , MessageForm ,CommentForm,ProfileForm
 from .models import TanmirtPost , Message ,Comment , UserProfile
 
 def home(request):
@@ -123,6 +123,24 @@ def LogoutUser(request):
     logout(request)
 
     return redirect('home')
+
+
+def UserProfileView(request,userid):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    if request.method=='POST':
+        form=ProfileForm(request.POST,request.FILES,instance=profile)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.user=request.user
+            instance.latitude=request.POST.get('latitud')
+            instance.longitude=request.POST.get('longitud')
+            instance.save()
+            return redirect('profile',userid)
+    else:
+        form=ProfileForm(instance=profile)
+
+    context={'form':form, 'profile':profile}
+    return render(request,'profile.html',context)
 
 
 

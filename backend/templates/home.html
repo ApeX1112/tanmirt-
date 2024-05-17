@@ -35,14 +35,8 @@
     </div>
     {% endif %}
 
-    {% if user.is_authenticated %}
-    <form id="positionForm" method="post">
-        {% csrf_token %}
-        <input type="hidden" id="id_latitude" name="latitude">
-        <input type="hidden" id="id_longitude" name="longitude">
-        <button type="button" onclick="getLocation()">Get Location</button>
-    </form>
-    {% endif%}
+    
+    <a href="{% url 'profile' user.id%}">profile</a>
 
     
 
@@ -69,6 +63,6 @@
     </div>
 
     
-    <script src="{% static 'js/location.jsx'%}"></script>
+    
 </body>
 </html>

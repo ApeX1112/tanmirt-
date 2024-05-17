@@ -1,31 +1,44 @@
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(setPosition, showError);
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-    
-}
+document.addEventListener('DOMContentLoaded', (event) => {
+    var map = L.map('mapContainer').setView([51.505, -0.09], 13);
 
-function setPosition(position) {
-    document.getElementById('id_latitude').value = position.coords.latitude;
-    document.getElementById('id_longitude').value = position.coords.longitude;
-    document.getElementById('positionForm').submit();
-}
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            alert("User denied the request for Geolocation.");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable.");
-            break;
-        case error.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
-        case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
+    var marker;
+
+    function setLatLng(lat, lng) {
+        console.log('Setting latitude:', lat);
+        console.log('Setting longitude:', lng);
+        document.getElementById('profileLatitude').value = lat;
+        document.getElementById('profileLongitude').value = lng;
     }
-}
+
+    map.on('click', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        setLatLng(e.latlng.lat, e.latlng.lng);
+    });
+
+    map.locate({setView: true, maxZoom: 16});
+    map.on('locationfound', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        setLatLng(e.latlng.lat, e.latlng.lng);
+    });
+
+    document.getElementById('profilePostForm').addEventListener('submit', function(event) {
+        var lat = document.getElementById('profileLatitude').value;
+        var lng = document.getElementById('profileLongitude').value;
+        console.log('Submitting latitude:', lat);
+        console.log('Submitting longitude:', lng);
+        if (!lat || !lng) {
+            event.preventDefault();
+            alert("Please select a location on the map.");
+        }
+    });
+});
