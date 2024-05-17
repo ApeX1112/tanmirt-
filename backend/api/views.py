@@ -17,15 +17,16 @@ def home(request):
 
         posts=TanmirtPost.objects.all()
 
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
-    if request.method == 'POST':
-        latitude = request.POST.get('latitude')
-        longitude = request.POST.get('longitude')
-        if latitude and longitude:
-            profile.latitude = latitude
-            profile.longitude = longitude
-            profile.save()
-            return redirect('home')
+    if request.user.is_authenticated:
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        if request.method == 'POST':
+            latitude = request.POST.get('latitude')
+            longitude = request.POST.get('longitude')
+            if latitude and longitude:
+                profile.latitude = latitude
+                profile.longitude = longitude
+                profile.save()
+                return redirect('home')
 
     context={'posts':posts}
     return render(request,'home.html',context)
