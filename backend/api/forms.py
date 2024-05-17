@@ -17,8 +17,10 @@ class TanmirtPostForm(ModelForm):
             'image',
             'title',
             'description',
-            'lost_or_found'
+            'lost_or_found',
+            
         ]
+    
 
 
 class MessageForm(ModelForm):

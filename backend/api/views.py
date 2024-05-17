@@ -76,6 +76,8 @@ def Post_on_Tanmirt(request):
             if form.is_valid():
                 instance=form.save(commit=False)
                 instance.user=request.user
+                instance.longitude=request.POST.get('longitude')
+                instance.latitude=request.POST.get('latitude')
                 instance.save()
                 return redirect('myposts')
         else:

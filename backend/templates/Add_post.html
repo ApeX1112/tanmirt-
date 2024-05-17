@@ -1,8 +1,33 @@
-<form  method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-    {{form.as_p}}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    
+</head>
+<body>
+    
+    <h1>Create Post</h1>
+    <form id="postForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div id="mapid" style="height: 400px;"></div>
+        <input  id="id_latitude" name="latitude">
+        <input  id="id_longitude" name="longitude">
+        <button type="submit">Post on Tanmirt</button>
+    </form>
 
-    <button type="submit" >post on tanmirt</button>
+    <style>
+        #id_latitude , #id_longitude{
+            display: none;
+        }
+    </style>
+    <script src="{% static 'js/postlocation.jsx' %}"></script>
+</body>
+</html>
 
 
-</form>
+
