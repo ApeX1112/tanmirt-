@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from .forms import TanmirtPostForm , MessageForm ,CommentForm,ProfileForm
 from .models import TanmirtPost , Message ,Comment , UserProfile
+from .utils import haversine
 
 def home(request):
     q=request.GET.get('q')
@@ -16,9 +17,11 @@ def home(request):
     else:
 
         posts=TanmirtPost.objects.all()
-
+    post_distances = []
     if request.user.is_authenticated:
         profile, created = UserProfile.objects.get_or_create(user=request.user)
+        long1=profile.longitude
+        lati1=profile.latitude
         if request.method == 'POST':
             latitude = request.POST.get('latitude')
             longitude = request.POST.get('longitude')
@@ -27,8 +30,23 @@ def home(request):
                 profile.longitude = longitude
                 profile.save()
                 return redirect('home')
-
-    context={'posts':posts}
+        
+        if lati1 is not None and long1 is not None:
+            for post in posts:
+                if post.latitude is not None and post.longitude is not None:
+                    distance = haversine(lati1, long1, post.latitude, post.longitude)
+                    if distance < 1:
+                        distance_str = "less than 1 km"
+                    else:
+                        distance_str = f"{int(distance)} km"
+                    post_distances.append((post, distance_str))
+                else:
+                    post_distances.append((post, "N/A"))
+        else:
+            post_distances = [(post, "N/A") for post in posts]
+    else:
+        post_distances = [(post, "N/A") for post in posts]
+    context = {'post_distances': post_distances}
     return render(request,'home.html',context)
 
 def showitem(request,pk):
