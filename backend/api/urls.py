@@ -1,10 +1,11 @@
 from django.urls import path
 from .views import home,register,loginUser,LogoutUser,Post_on_Tanmirt,showitem
 from .views import TanmirtMessage , UserProfileView,TanmirtInbox,Tanmirtnotifications
-from .views import PostDelete
+from .views import PostDelete , LandingPage
 
 urlpatterns = [
-    path('',home,name='home'),
+    path('',LandingPage),
+    path('home',home,name='home'),
     path('register/',register,name='register'),
     path('login/',loginUser,name='login'),
     path('logout/',LogoutUser,name='logout'),

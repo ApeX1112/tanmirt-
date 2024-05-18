@@ -14,6 +14,13 @@ from .forms import TanmirtPostForm , MessageForm ,CommentForm,ProfileForm
 from .models import TanmirtPost , Message ,Comment , UserProfile
 from .utils import haversine
 
+
+def LandingPage(request):
+
+    return render(request,'LandingPage.html')
+
+
+
 def home(request):
     q=request.GET.get('q')
     distance_range = request.GET.get('distanceRange', 100)
