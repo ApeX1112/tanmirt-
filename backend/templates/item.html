@@ -15,22 +15,33 @@
         <img src="{{item.image.url}}" alt="Item image" class="item-image">
         <p class="item-description">{{item.description}}</p>
         <p class="item-details"><strong>Posted:</strong> {{item.date}} <strong>by:</strong> {{item.user.username}}</p>
+        
+        {% if user.is_authenticated%}
+        {% if user.id != item.user.id %}
         <button class="contact-button">
             <a href="{% url 'message' item.user.id%}">
                 Contact {{item.user.username}}
             </a>
         </button>
+        {% endif %}
+        {% else %}
+            <p > <a href="{% url 'login'%}">login</a>/ <a href="{% url 'register'%}">register</a>  to contact {{item.user.username}}</p>
+        {% endif%}
     </div>
     <div>
         <hr/>
         <h1>Comments</h1>
 
+        {% if user.is_authenticated%}
         <form  method="post">
 
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit"> comment </button>
         </form>
+        {% else %}
+        <p > <a href="{% url 'login'%}">login</a>/ <a href="{% url 'register'%}">register</a>  to comment on  {{item.user.username}}'s post</p>
+        {% endif%}
 
         {%for comment in comments%}
         <h1>{{comment.writer.username}}</h1>

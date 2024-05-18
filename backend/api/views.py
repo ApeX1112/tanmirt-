@@ -125,6 +125,9 @@ def showitem(request,pk):
     else:
         form=CommentForm()
 
+    
+
+    
     context={'item':item,'comments':comments, 'form':form}
     return render(request,'item.html',context)
 
