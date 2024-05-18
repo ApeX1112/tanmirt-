@@ -1,0 +1,20 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+</head>
+<body>
+    <h1>Notifications</h1>
+    <div class="notifications-container">
+        {% for notification in notifications %}
+            <div class="notification">
+                {{ notification|safe }}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

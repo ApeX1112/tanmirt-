@@ -6,6 +6,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.utils.timesince import timesince
+from django.utils.timezone import now
+from django.utils.html import format_html
 
 from .forms import TanmirtPostForm , MessageForm ,CommentForm,ProfileForm
 from .models import TanmirtPost , Message ,Comment , UserProfile
@@ -52,21 +55,49 @@ def home(request):
     context = {'post_distances': post_distances}
     return render(request,'home.html',context)
 
+def Tanmirtnotifications(request):
+    if request.user.is_authenticated:
+        user_posts=TanmirtPost.objects.filter(user=request.user)
+
+        latest_comments=Comment.objects.filter(post__in=user_posts).order_by('-date')
+
+        notifications = []
+    for comment in latest_comments:
+        time_ago = timesince(comment.date, now())
+        post_link = format_html("<a href='/item/{0}'>{1}</a>", comment.post.id, comment.post.title)
+        notification = format_html(
+            "<div class='notification'>"
+            "<h1>{0}</h1>"
+            "<p>commented on your post {1}</p>"
+            "<p>{2} ago</p>"
+            "</div>",
+            comment.writer.username,
+            post_link,
+            time_ago
+        )
+        notifications.append(notification)
+
+    
+    context = {
+        'notifications': notifications
+    }
+    return render(request,'Notifications.html',context)
+
 def TanmirtInbox(request):
     if request.user.is_authenticated:
-        # Get all messages where the user is either the sender or receiver, excluding self-conversations
+        
         messages = Message.objects.filter(
             (Q(sender=request.user) | Q(receiver=request.user)) & ~Q(sender=request.user, receiver=request.user)
         ).order_by('date')
 
-        # Dictionary to keep track of the latest message for each user pair
+        
         user_pairs = {}
         
         for message in messages:
-            # Create a sorted tuple key to handle both directions (sender <-> receiver)
+            
             pair_key = tuple(sorted([message.sender.id, message.receiver.id]))
             
-            # Only keep the latest message for each pair
+            
             user_pairs[pair_key] = message
 
     else:

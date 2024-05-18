@@ -1,0 +1,60 @@
+
+/* static/css/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.messages-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.message-item {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.message-item:last-child {
+    border-bottom: none;
+}
+
+.message-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.message-link:hover {
+    text-decoration: underline;
+}
+
+.message-date {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+p {
+    text-align: center;
+    color: #666;
+}

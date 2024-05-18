@@ -1,0 +1,30 @@
+/* static/css/styles.css */
+.notifications-container {
+    margin: 20px;
+}
+
+.notification {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.notification h1 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.notification p {
+    margin: 5px 0;
+}
+
+.notification a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.notification a:hover {
+    text-decoration: underline;
+}
