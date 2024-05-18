@@ -63,7 +63,7 @@ def Tanmirtnotifications(request):
     if request.user.is_authenticated:
         user_posts=TanmirtPost.objects.filter(user=request.user)
 
-        latest_comments=Comment.objects.filter(post__in=user_posts).order_by('-date')
+        latest_comments=Comment.objects.filter(post__in=user_posts).exclude(writer=request.user).order_by('-date')
 
         notifications = []
     for comment in latest_comments:
