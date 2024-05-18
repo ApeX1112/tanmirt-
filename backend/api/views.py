@@ -52,7 +52,11 @@ def home(request):
             post_distances = [(post, "N/A") for post in posts]
     else:
         post_distances = [(post, "N/A") for post in posts]
-    context = {'post_distances': post_distances}
+    if q:
+        search_query=q
+    else:
+        search_query=''
+    context = {'post_distances': post_distances , 'search_query':search_query}
     return render(request,'home.html',context)
 
 def Tanmirtnotifications(request):
