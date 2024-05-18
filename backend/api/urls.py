@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import home,register,loginUser,LogoutUser,Post_on_Tanmirt,showitem
 from .views import TanmirtMessage , UserProfileView,TanmirtInbox,Tanmirtnotifications
+from .views import PostDelete
 
 urlpatterns = [
     path('',home,name='home'),
@@ -14,4 +15,6 @@ urlpatterns = [
     path('profile/<str:userid>',UserProfileView,name='profile'),
     path('inbox',TanmirtInbox,name='inbox'),
     path('notifications',Tanmirtnotifications,name='notifications'),
+
+    path('delete/<str:pk>',PostDelete,name='Delete')
 ]

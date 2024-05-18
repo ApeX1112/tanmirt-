@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect ,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import login , authenticate ,logout
 from .forms import MyUserCreationForm
@@ -130,6 +130,12 @@ def showitem(request,pk):
     
     context={'item':item,'comments':comments, 'form':form}
     return render(request,'item.html',context)
+
+def PostDelete(request,pk):
+    post = get_object_or_404(TanmirtPost, pk=pk)
+    post.delete()
+
+    return redirect('home')
 
 def TanmirtMessage(request,userid):
     messages=Message.objects.all()
