@@ -66,3 +66,9 @@
 .cancel-button:hover {
     opacity: 0.8;
 }
+
+.block{
+    word-wrap: break-word; /* Break long words */
+            overflow-wrap: break-word; /* Break long words (alternative property) */
+            white-space: normal;
+}

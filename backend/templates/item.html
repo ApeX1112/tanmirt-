@@ -13,7 +13,9 @@
     <div class="container">
         <h1>Item:</h1>
         <p class="item-title">{{item.title}}</p>
+        {% if item.image%}
         <img src="{{item.image.url}}" alt="Item image" class="item-image">
+        {% endif %}
         <p class="item-description">{{item.description}}</p>
         <p class="item-details"><strong>Posted:</strong> {{item.date}} <strong>by:</strong> {{item.user.username}}</p>
         

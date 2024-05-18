@@ -42,6 +42,11 @@ body {
     padding: 10px;
     width: 300px;
     box-sizing: border-box;
+
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .post img {
@@ -154,6 +159,9 @@ body {
     width: 100%;
     margin: 20px;
     text-align: center;
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 h1 {
@@ -200,3 +208,4 @@ h1 {
 .contact-button:hover {
     background-color: #3e8e41;
 }
+

@@ -7,7 +7,7 @@ class TanmirtPost(models.Model):
     LOST="lost"
     FOUND="found"
 
-    image=models.ImageField(upload_to="images")
+    image=models.ImageField(upload_to="images",null=True, blank=True)
     title=models.CharField(max_length=200)
     date=models.DateTimeField(auto_now_add=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE)

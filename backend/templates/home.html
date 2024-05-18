@@ -57,22 +57,23 @@
         <button type="submit">Search & Filter</button>
     </form>
 
-    <div class="posts"  >
-    {% for post, distance in post_distances %}
-    <div class="post" >
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
-    <a href="{% url 'item' post.id %}" class="postitle"><strong>{{ post.title }}</strong></a>
-    <p>{{ post.description }}</p>
-    <p><strong>Posted by:</strong> {{ post.user.username }}</p>
-    <p><strong>Date:</strong> {{ post.date }}</p>
-    <strong>{{ post.lost_or_found }}</strong>
-    {% if distance != "N/A" %}
-    <p><strong>Distance:</strong> {{ distance }}</p>
-    {% endif %}
-    <hr/>
-    </div>
-    {% endfor %}
-
+    <div class="posts">
+        {% for post, distance in post_distances %}
+            <div class="post">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
+                {% endif %}
+                <a href="{% url 'item' post.id %}" class="postitle"><strong>{{ post.title }}</strong></a>
+                <p>{{ post.description }}</p>
+                <p><strong>Posted by:</strong> {{ post.user.username }}</p>
+                <p><strong>Date:</strong> {{ post.date }}</p>
+                <strong>{{ post.lost_or_found }}</strong>
+                {% if distance != "N/A" %}
+                    <p><strong>Distance:</strong> {{ distance }}</p>
+                {% endif %}
+                <hr/>
+            </div>
+        {% endfor %}
     </div>
 
     
