@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Inbox</h1>
+    {% if user_pairs %}
+        <ul>
+            {% for pair, message in user_pairs.items %}
+                <li>
+                    {% if request.user == message.sender %}
+                        <a href="{% url 'message' message.receiver.id %}">Between {{ message.sender.username }} and {{ message.receiver.username }}</a>: {{ message.body }} <br>
+                    {% else %}
+                        <a href="{% url 'message' message.sender.id %}">Between {{ message.sender.username }} and {{ message.receiver.username }}</a>: {{ message.body }} <br>
+                    {% endif %}
+                    <em>Sent at: {{ message.date }}</em>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No messages found.</p>
+    {% endif %}
+</body>
+</html>
+
+
+

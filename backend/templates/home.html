@@ -35,13 +35,27 @@
     </div>
     {% endif %}
 
-    
+    {% if user.is_authenticated %}
     <a href="{% url 'profile' user.id%}">profile</a>
+
+    <a href="{% url 'inbox'%}">Inbox</a>
+    {% endif  %}
 
     
 
 
     <h1>Items</h1>
+
+    <form action="" method="GET" class="search-form">
+
+        
+        <label for="distanceRange">Filter by distance (km):</label>
+        <input type="range" id="distanceRange" name="distanceRange" min="0" max="100" value="{{ distance_range }}" oninput="document.getElementById('distanceLabel').innerText = this.value + ' km'">
+        <span id="distanceLabel">{{ distance_range }} km</span>
+        
+        <button type="submit">Filter</button>
+    </form>
+    
     <form action="" method="GET" class="search-form">
     
         <input type="text" placeholder="search on tanmirt" name="q" class="search-bar">
@@ -65,7 +79,7 @@
 
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="{% static 'js/filter.jsx' %}"></script>
+    
+    
 </body>
 </html>

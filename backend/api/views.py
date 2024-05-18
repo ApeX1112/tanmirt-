@@ -5,6 +5,7 @@ from .forms import MyUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from .forms import TanmirtPostForm , MessageForm ,CommentForm,ProfileForm
 from .models import TanmirtPost , Message ,Comment , UserProfile
@@ -12,6 +13,7 @@ from .utils import haversine
 
 def home(request):
     q=request.GET.get('q')
+    distance_range = request.GET.get('distanceRange', 100)
     if q:
         posts=TanmirtPost.objects.filter(title__icontains=q)
     else:
@@ -35,11 +37,12 @@ def home(request):
             for post in posts:
                 if post.latitude is not None and post.longitude is not None:
                     distance = haversine(lati1, long1, post.latitude, post.longitude)
-                    if distance < 1:
-                        distance_str = "less than 1 km"
-                    else:
-                        distance_str = f"{int(distance)} km"
-                    post_distances.append((post, distance_str))
+                    if distance <= float(distance_range):
+                        if distance < 1:
+                            distance_str = "less than 1 km"
+                        else:
+                            distance_str = f"{int(distance)} km"
+                        post_distances.append((post, distance_str))
                 else:
                     post_distances.append((post, "N/A"))
         else:
@@ -48,6 +51,30 @@ def home(request):
         post_distances = [(post, "N/A") for post in posts]
     context = {'post_distances': post_distances}
     return render(request,'home.html',context)
+
+def TanmirtInbox(request):
+    if request.user.is_authenticated:
+        # Get all messages where the user is either the sender or receiver, excluding self-conversations
+        messages = Message.objects.filter(
+            (Q(sender=request.user) | Q(receiver=request.user)) & ~Q(sender=request.user, receiver=request.user)
+        ).order_by('date')
+
+        # Dictionary to keep track of the latest message for each user pair
+        user_pairs = {}
+        
+        for message in messages:
+            # Create a sorted tuple key to handle both directions (sender <-> receiver)
+            pair_key = tuple(sorted([message.sender.id, message.receiver.id]))
+            
+            # Only keep the latest message for each pair
+            user_pairs[pair_key] = message
+
+    else:
+        user_pairs = {}
+
+    context = {"user_pairs": user_pairs}
+    return render(request, 'inbox.html', context)
+
 
 def showitem(request,pk):
     item=TanmirtPost.objects.get(pk=pk)
