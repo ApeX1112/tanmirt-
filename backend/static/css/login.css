@@ -27,6 +27,7 @@ body {
     flex-direction: column;
     justify-content: center;
     color: white;
+    align-items: center;
 }
 
 .welcome-section h2 {
@@ -82,4 +83,6 @@ body {
     background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
 
-
+.logo{
+    width: 50%;
+}
