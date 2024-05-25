@@ -1,0 +1,85 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: 'Arial', sans-serif;
+    color: white;
+}
+
+.login-container {
+    display: flex;
+    width: 800px;
+    height: 400px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.welcome-section {
+    flex: 1;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.welcome-section h2 {
+    margin-bottom: 10px;
+    font-size: 36px;
+}
+
+.welcome-section p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.login-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+.login-section h2 {
+    margin-bottom: 20px;
+    color: #764ba2;
+}
+
+.login-section form {
+    width: 100%;
+    max-width: 300px;
+}
+
+.login-section form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login-section form button {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-section form button:hover {
+    background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+

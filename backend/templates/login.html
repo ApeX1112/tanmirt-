@@ -1,5 +1,29 @@
-<form  method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit">
-</form>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="welcome-section">
+            <h2>Welcome Back to Tanmirt</h2>
+            <p>Some other text.</p>
+        </div>
+        <div class="login-section">
+            <h2>User Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
