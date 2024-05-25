@@ -4,18 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanmirt</title>
-
+    <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/LandingPage.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Landing Page 9adha awld l7ram </h1>
+    <h1 class="title">Welcome to Tanmirt</h1>
+    <p class="description"> Your Platform for Finding Lost and Found Items</p>
+    <a href="{% url 'home' %}"><button class="button">Home</button></a>
+    <img src="{% static 'assets/back.png' %}" class="heroimage">
+    <img src="{% static 'assets/local.png' %}" class="local">
 
-    <a href="{% url 'home' %}"> Home</a>
+    <ul class="list">
+        <li> 
+            <img src="{% static 'assets/1.webp' %}" >
+            <p>Post Lost or Found Items</p>
+            <h5>Users can upload photos, add descriptions, specify the location, and provide contact information to facilitate quick and effective reunions.</h5>
+        </li>
+        <li> 
+            <img src="{% static 'assets/2.webp' %}" >
+            <p>Direct Communication</p>
+            <h5> The platform enables direct communication between users who have lost or found items. </h5>
+        </li>
+        <li> 
+            <img src="{% static 'assets/3.webp' %}" >
+            <p>Browse and Search Listings</p>
+            <h5>Users can browse through all posted items or use the search functionality to find specific lost or found items.</h5>
+        </li>
+    </ul>
     
-
-
-
-    <script src="{% static 'js/LandingPage.jsx' %}"></script>
 </body>
 </html>

@@ -1,0 +1,84 @@
+body{
+    background-color: #f1f2f5;
+}
+.heroimage{
+    width: 100%;
+    
+}
+
+.local{
+    width: 25%;
+    position: absolute;
+    left: 56%;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-family: 'Lobster', cursive;
+    font-size: 8vw;
+    position: absolute;
+    color: #1677d8;
+    width: 50%;
+    
+}
+
+.description{
+    position: absolute;
+    margin-top: 25%;
+    width: 25%;
+    font-size: 2vw;
+    color: #9e9fa1;
+    font-family:'Lobster';
+}
+.button{
+    background-color: #1677d8;
+    color: #f1f2f5;
+    border-radius: 10px;
+    position: absolute;
+    margin-top: 35%;
+    margin-left: 5%;
+    width: 10%;
+    font-size: 2vw;
+    cursor: pointer;
+}
+
+.list{
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+.list img {
+    width: 90%;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    
+}
+.list img:hover {
+    transform: scale(1.1,1.1);
+}
+.list p {
+    width: 60%;
+    font-size: 2.5vw;
+    margin-left: 20%;
+    
+    
+}
+.list h5 {
+    width: 60%;
+    font-size: 1.8vw;
+    margin-left: 20%;
+    color: #9e9fa1;
+    
+}

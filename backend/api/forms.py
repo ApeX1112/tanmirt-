@@ -20,6 +20,13 @@ class TanmirtPostForm(ModelForm):
             'lost_or_found',
             
         ]
+
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'lost_or_found': forms.Select(attrs={'class': 'form-control'}),
+        }
     
 
 

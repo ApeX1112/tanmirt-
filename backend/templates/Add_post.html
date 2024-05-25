@@ -6,12 +6,13 @@
     <title>Create Post</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="{% static 'css/Add_Post.css' %}">
     
 </head>
 <body>
     
-    <h1>Create Post</h1>
     <form id="postForm" method="post" enctype="multipart/form-data">
+        <h1>Create Post</h1>
         {% csrf_token %}
         {{ form.as_p }}
         <div id="mapid" style="height: 400px;"></div>
