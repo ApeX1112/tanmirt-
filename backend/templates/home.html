@@ -1,82 +1,73 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tanmirt</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
+    <title>Welcome to Tanmirt</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
 </head>
 <body>
-    <div class="title-container">
-    {% if user.is_authenticated %}
-    <h1 class="title">{{user}} ,welcome to tanmirt </h1>
-    {% else %}
-    <h1 class="title">welcome to tanmirt </h1>
-    {% endif %}
-    </div>
-    
-    {% if user.is_authenticated %}
-    <div class="logout-container">
-    <a href="{% url 'logout' %}" class="login-button"> logout</a> <br>
-    </div>
-
-    <div class="poston-container">
-        <a href="{% url 'myposts' %}" class="poston"> post on Tanmirt!</a>
-    </div>
-    {% else %}
-    <div class="logout-container">
-    <a href="{% url 'register' %}" class="login-button"> register</a> <br>
-    </div>
-    <div class="logout-container">
-    <a href="{% url 'login' %}" class="login-button"> login</a> <br>
-    </div>
-    {% endif %}
-
-    {% if user.is_authenticated %}
-    <a href="{% url 'profile' user.id%}">profile</a>
-
-    <a href="{% url 'inbox'%}">Inbox</a>
-    <a href="{% url 'notifications'%}">My Notifications</a>
-    {% endif  %}
-
-    
-
-
-    <h1>Items</h1>
-
-    <form action="" method="GET" class="search-form">
-        <input type="text" placeholder="Search on Tanmirt" name="q" class="search-bar" value="{{ search_query }}">
-
-        <label for="distanceRange">Filter by distance (km):</label>
-        <input type="range" id="distanceRange" name="distanceRange" min="0" max="100" value="{{ distance_range }}" oninput="document.getElementById('distanceLabel').innerText = this.value + ' km'">
-        <span id="distanceLabel">{{ distance_range }} km</span>
-        
-        <button type="submit">Search & Filter</button>
-    </form>
-
-    <div class="posts">
-        {% for post, distance in post_distances %}
-            <div class="post">
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
+    <header>
+        <div class="header-content">
+            {% if user.is_authenticated %}
+            <h1>{{ user }}, welcome to Tanmirt</h1>
+            {% else %}
+            <h1>Welcome to Tanmirt</h1>
+            {% endif %}
+            <div class="search-container">
+                <form action="" method="GET" class="search-form">
+                    <input type="text" placeholder="Search on Tanmirt" name="q" class="search-box" value="{{ search_query }}">
+                    <label for="distanceRange">Filter by distance (km):</label>
+                    <input type="range" id="distanceRange" name="distanceRange" min="0" max="100" value="{{ distance_range }}" oninput="document.getElementById('distanceLabel').innerText = this.value + ' km'">
+                    <span id="distanceLabel">{{ distance_range }} km</span>
+                    <button type="submit">Search & Filter</button>
+                </form>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="login-button">Logout</a>
+                <a href="{% url 'myposts' %}" class="poston">Post on Tanmirt!</a>
+                {% else %}
+                <a href="{% url 'register' %}" class="register-btn">Register</a>
+                <a href="{% url 'login' %}" class="login-btn">Log in</a>
                 {% endif %}
-                <a href="{% url 'item' post.id %}" class="postitle"><strong>{{ post.title }}</strong></a>
-                <p>{{ post.description }}</p>
-                <p><strong>Posted by:</strong> {{ post.user.username }}</p>
-                <p><strong>Date:</strong> {{ post.date }}</p>
-                <strong>{{ post.lost_or_found }}</strong>
-                {% if distance != "N/A" %}
-                    <p><strong>Distance:</strong> {{ distance }}</p>
-                {% endif %}
-                <hr/>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    </header>
+    
+    <main>
+        {% if user.is_authenticated %}
+        <nav>
+            <a href="{% url 'profile' user.id %}">Profile</a>
+            <a href="{% url 'inbox' %}">Inbox</a>
+            <a href="{% url 'notifications' %}">My Notifications</a>
+        </nav>
+        {% endif %}
 
-    
-    
+        <h1>Items</h1>
+
+        <div class="items-container">
+            {% for post, distance in post_distances %}
+            <div class="item">
+                {% if post.image %}
+                <div class="item-picture">
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="item-picture">
+                </div>
+                {% endif %}
+                <div class="item-description">
+                    <a href="{% url 'item' post.id %}" class="postitle"><strong>{{ post.title }}</strong></a>
+                    <p>{{ post.description }}</p>
+                    <p><strong>Posted by:</strong> {{ post.user.username }}</p>
+                    <p><strong>Date:</strong> {{ post.date }}</p>
+                    <strong>{{ post.lost_or_found }}</strong>
+                    {% if distance != "N/A" %}
+                    <p><strong>Distance:</strong> {{ distance }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script src="{% static 'js/home.jsx' %}"></script>
 </body>
 </html>
