@@ -5,31 +5,61 @@
     <meta charset="UTF-8">
     <title>Edit Profile</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
-    <style>
-        #mapContainer {
-            height: 400px; /* Ensure the map container has a height */
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+   
 </head>
 <body>
-    <img src="{{profile.image.url}}" class="profile-image"/>
-    <h1>{{profile.user.username}}</h1>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'assets/logowhite.png' %}" alt="Tanmirt Logo">
+                    </a>
+                </div>
+                <h1 class="title">
+                    {% if user.is_authenticated %}
+                        Welcome to Tanmirt
+                    {% else %}
+                        Welcome to Tanmirt
+                    {% endif %}
+                </h1>
+                <nav class="nav">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' user.id %}" class="nav-link">Profile</a>
+                        <a href="{% url 'inbox' %}" class="nav-link">Inbox</a>
+                        <a href="{% url 'notifications' %}" class="nav-link">Notifications</a>
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                        <a href="{% url 'myposts' %}" class="nav-link nav-highlight">Post on Tanmirt!</a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="nav-link">Register</a>
+                        <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        {% if profile.image %}
+            <img src="{{ profile.image.url }}" class="profile-image" alt="Profile Image"/>
+        {% else %}
+            <img src="{% static 'assets/logo.png' %}" class="profile-image" alt="Default Profile Image"/>
+        {% endif %}
+        <h1 class="profile-username">{{ profile.user.username }}</h1>
+    </div>
 
     <h1>Edit Profile</h1>
     <form id="profilePostForm" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <p>Let us know your current position</p>
         <input type="hidden" id="profileLatitude" name="latitud">
         <input type="hidden" id="profileLongitude" name="longitud">
         <div id="mapContainer"></div>
         <button type="submit">Edit Profile</button>
     </form>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="{% static 'js/location.jsx' %}">
-        
-    </script>
+    <script src="{% static 'js/location.jsx' %}"></script>
 </body>
 </html>
-
-

@@ -1,72 +1,58 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Item Page</title>
-    <link rel="stylesheet" href="{% static 'css/item.css'%}">
-    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Item:</h1>
-        <p class="item-title">{{item.title}}</p>
-        {% if item.image%}
-        <img src="{{item.image.url}}" alt="Item image" class="item-image">
-        {% endif %}
-        <p class="item-description">{{item.description}}</p>
-        <p class="item-details"><strong>Posted:</strong> {{item.date}} <strong>by:</strong> {{item.user.username}}</p>
-        
-        {% if user.is_authenticated%}
-        {% if user.id != item.user.id %}
-        <button class="contact-button">
-            <a href="{% url 'message' item.user.id%}">
-                Contact {{item.user.username}}
-            </a>
-        </button>
-        {% else %}
-        <button class="delete-button" onclick="openModal()">Delete</button>
-        {% endif %}
-        {% else %}
-            <p > <a href="{% url 'login'%}">login</a>/ <a href="{% url 'register'%}">register</a>  to contact {{item.user.username}}</p>
-        {% endif%}
-    </div>
-    <div>
-        <hr/>
-        <h1>Comments</h1>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'home' %}"><img src="{% static 'assets/logowhite.png' %}" alt="Tanmirt Logo"></a>
+                </div>
+                <h1 class="title">
+                    {% if user.is_authenticated %}
+                        Welcome to Tanmirt
+                    {% else %}
+                        Welcome to Tanmirt
+                    {% endif %}
+                </h1>
+                <nav class="nav">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' user.id %}" class="nav-link">Profile</a>
+                        <a href="{% url 'inbox' %}" class="nav-link">Inbox</a>
+                        <a href="{% url 'notifications' %}" class="nav-link">Notifications</a>
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                        <a href="{% url 'myposts' %}" class="nav-link nav-highlight">Post on Tanmirt!</a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="nav-link">Register</a>
+                        <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
 
-        {% if user.is_authenticated%}
-        <form  method="post">
-
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit"> comment </button>
-        </form>
-        {% else %}
-        <p > <a href="{% url 'login'%}">login</a>/ <a href="{% url 'register'%}">register</a>  to comment on  {{item.user.username}}'s post</p>
-        {% endif%}
-
-        {%for comment in comments%}
-        <h1>{{comment.writer.username}}</h1>
-        <p>{{comment.body}}</p>
-        <p><strong>commented at:</strong> {{comment.date}}</p>
-        {%endfor%}
-    </div>
-
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete "{{ item.title }}"?</p>
-            <form action="{% url 'Delete' item.pk %}" method="POST" style="display: inline;">
+    <div class="login-container">
+        <div class="welcome-section">
+            <img src="{% static 'assets/logowhite.png'%}" class="logo"/>
+            <h2>Welcome Back to Tanmirt</h2>
+            <p>Some other text.</p>
+        </div>
+        <div class="login-section">
+            <h2>User Login</h2>
+            <form method="post">
                 {% csrf_token %}
-                <button type="submit" class="confirm-delete-button">Yes, delete</button>
-                <button type="button" class="cancel-button" onclick="closeModal()">Cancel</button>
+                {{ form.as_p }}
+                <button type="submit" class="login-button">Login</button>
             </form>
         </div>
     </div>
-    <script src="{% static 'js/item.jsx' %}"></script>
 </body>
 </html>

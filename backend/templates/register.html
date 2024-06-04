@@ -1,6 +1,39 @@
-<h2>register</h2>
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">register</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'assets/logowhite.png' %}" alt="Tanmirt Logo">
+                    </a>
+                </div>
+                
+                <h1 class="title">Tanmirt</h1>
+                <nav class="nav">
+                    <a href="{% url 'login' %}" class="nav-link">Login</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="form-container">
+            <h2>Register</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="submit-button">Register</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

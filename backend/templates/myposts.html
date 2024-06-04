@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="{% static 'css/Add_Post.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'assets/logowhite.png' %}" alt="Tanmirt Logo">
+                    </a>
+                </div>
+                
+                <h1 class="title">
+                    {% if user.is_authenticated %}
+                        Welcome to Tanmirt
+                    {% else %}
+                        Welcome to Tanmirt
+                    {% endif %}
+                </h1>
+                <nav class="nav">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' user.id %}" class="nav-link">Profile</a>
+                        <a href="{% url 'inbox' %}" class="nav-link">Inbox</a>
+                        <a href="{% url 'notifications' %}" class="nav-link">Notifications</a>
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                        <a href="{% url 'myposts' %}" class="nav-link nav-highlight">Post on Tanmirt!</a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="nav-link">Register</a>
+                        <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="postForm" method="post" enctype="multipart/form-data">
+            <h1>Create Post</h1>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div id="mapid"></div>
+            <input id="id_latitude" name="latitude">
+            <input id="id_longitude" name="longitude">
+            <button type="submit">Post on Tanmirt</button>
+        </form>
+    </div>
+    
+    <script src="{% static 'js/postlocation.jsx' %}"></script>
+</body>
+</html>

@@ -7,8 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    
 </head>
 <body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'home' %}">
+                        <img src="{% static 'assets/logowhite.png' %}" alt="Tanmirt Logo">
+                    </a>
+                </div>
+                <h1 class="title">
+                    {% if user.is_authenticated %}
+                        Welcome to Tanmirt
+                    {% else %}
+                        Welcome to Tanmirt
+                    {% endif %}
+                </h1>
+                <nav class="nav">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' user.id %}" class="nav-link">Profile</a>
+                        <a href="{% url 'inbox' %}" class="nav-link">Inbox</a>
+                        <a href="{% url 'notifications' %}" class="nav-link">Notifications</a>
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                        <a href="{% url 'myposts' %}" class="nav-link nav-highlight">Post on Tanmirt!</a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="nav-link">Register</a>
+                        <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
     <div class="login-container">
         <div class="welcome-section">
             <img src="{% static 'assets/logowhite.png'%}" class="logo"/>
@@ -20,11 +52,9 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                
                 <button type="submit" class="login-button">Login</button>
             </form>
         </div>
     </div>
 </body>
 </html>
-
